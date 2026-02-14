@@ -1,0 +1,51 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Planning tab: lightweight plans with notes and saved links",
+  "requirements": [
+    {
+      "id": "REQ-10",
+      "summary": "Redesign the Planning tab UI into a simple plan title list with an in-tab plan editor for notes and saved links (no holiday stats/fields).",
+      "acceptanceCriteria": [
+        "PlanningTab no longer shows holiday-specific fields (dates, participants, budget, confirmation, upcoming badges) and no longer shows the existing stats cards.",
+        "The default Planning view shows a list of plan titles with an obvious control to create a new plan using only a title input.",
+        "Clicking a plan opens a detail view/editor where the user can edit freeform notes text.",
+        "The editor includes a simple way to add/remove links and renders saved links as clickable anchors (open in a new tab).",
+        "All user-facing copy is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/tabs/PlanningTab.tsx",
+          "operation": "modify",
+          "description": "Replace the holiday-planning UI with a lightweight plans UX: (1) a title-only create control, (2) a list of plan titles, and (3) a selected-plan editor for freeform notes and saved links (add/remove + render as anchors opening in a new tab). Remove any dependency on stats cards and all holiday-specific fields/badges/copy. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/DashboardLayout.tsx",
+          "operation": "modify",
+          "description": "Confirm the Planning tab remains wired and functional with the redesigned PlanningTab (no new tabs/routes). If any label/help text references holidays/trips/stats, update it to match the simplified Planning experience and keep copy in English. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Update React Query hooks and frontend types for Planning to use the simplified plan model and ensure correct cache invalidation after create/update/delete.",
+      "acceptanceCriteria": [
+        "frontend/src/hooks/useQueries.ts exposes query/mutation hooks compatible with the updated backend Planning methods.",
+        "After creating, updating, or deleting a plan, the Planning queries are invalidated/refetched so UI updates immediately without a hard refresh.",
+        "No immutable frontend paths are modified (as per SYSTEM_CONTEXT immutablePaths)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Update Planning-related React Query hooks to match the simplified backend model/methods: use getPlans/addPlan/updatePlan/deletePlan and the Plan type, and remove/stop exporting hooks that depend on holiday planning stats so the Planning UI does not call them. Ensure mutations invalidate/refetch the plans query so the list and editor stay synchronized. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/tabs/PlanningTab.tsx",
+          "operation": "modify",
+          "description": "Update PlanningTab to use the new plan hooks/types from useQueries (e.g., useGetPlans/useAddPlan/useUpdatePlan/useDeletePlan or equivalent updated exports) and rely on React Query invalidation to keep the selected-plan editor and list in sync after create/update/delete. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

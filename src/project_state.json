@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "New project",
+  "architectural_notes": [
+    "Planning items should support a simple title list view and a detail view with freeform note content including links (lightweight notes vs. full structured planning like other sections)."
+  ],
+  "known_issues": [
+    "On mobile (e.g., iPhone home screen mode), sidebar may start collapsed making only the NNS section visible by default"
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-add-a-new-planning-section-tab-focused-on-simple-holiday-planning-including-the-ability-to-create-view-edit-and-delete-holiday-plans-per-user",
+      "title": "Add a new Planning section (tab) focused on simple holiday planning, including the ability to create, view, edit, and delete holiday plans per user.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-for-planning-in-frontend-src-hooks-usequeries-ts-and-integrate-them-into-a-new-planningtab-ui-component-rendered-from-the-dashboard",
+      "title": "Add React Query hooks for Planning in frontend/src/hooks/useQueries.ts and integrate them into a new PlanningTab UI component rendered from the dashboard.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-application-theme-to-an-apple-like-liquid-glass-minimal-aesthetic-across-the-login-page-and-dashboard-neutral-palette-subtle-translucency-soft-borders-and-consistent-spacing-avoid-vibrant-gradient-backgrounds",
+      "title": "Change the application theme to an Apple-like “liquid glass” minimal aesthetic across the login page and dashboard: neutral palette, subtle translucency, soft borders, and consistent spacing; avoid vibrant gradient backgrounds.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-emojis-logos-and-decorative-icons-from-the-ui-and-keep-navigation-and-headers-text-only-including-removing-tab-icon-images-and-lucide-icons-used-as-branding-or-decoration",
+      "title": "Remove all emojis, logos, and decorative icons from the UI and keep navigation and headers text-only, including removing tab icon images and lucide icons used as branding or decoration.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-the-mobile-experience-so-users-do-not-land-in-a-state-where-only-the-nns-section-appears-due-to-a-collapsed-hidden-sidebar-ensure-navigation-is-discoverable-and-usable-on-small-screens-and-in-iphone-home-screen-pwa-mode",
+      "title": "Improve the mobile experience so users do not land in a state where only the NNS section appears due to a collapsed/hidden sidebar; ensure navigation is discoverable and usable on small screens and in iPhone home screen (PWA) mode.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-planning-tab-ui-to-be-a-lightweight-plan-list-and-plan-editor-the-user-can-add-a-new-plan-by-entering-a-title-e-g-dubai-click-a-plan-to-open-it-and-then-type-notes-and-manage-saved-links-the-planning-section-does-not-need-to-match-the-structure-or-complexity-of-other-tabs",
+      "title": "Redesign the Planning tab UI to be a lightweight plan list and plan editor: the user can add a new plan by entering a title (e.g., \"Dubai\"), click a plan to open it, and then type notes and manage saved links; the Planning section does not need to match the structure or complexity of other tabs.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-react-query-hooks-and-frontend-types-used-by-the-planning-tab-to-match-the-new-simplified-backend-model-and-endpoints-including-correct-cache-invalidation-after-create-update-delete-so-the-list-and-editor-stay-in-sync",
+      "title": "Update React Query hooks and frontend types used by the Planning tab to match the new simplified backend model and endpoints, including correct cache invalidation after create/update/delete so the list and editor stay in sync.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add a simple Planning section focused mainly on holiday planning",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Update UI theme to Apple-like “liquid glass” minimal style; remove emojis/logos and keep text-only writing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement backend support for Planning data in the single Motoko actor by adding a new Planning data type, per-user storage, and authorization-protected query/update methods required by the Planning UI.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Simplify Planning section to a lightweight list of plan titles (e.g., “Dubai”) that open into a freeform note editor supporting typed text and saved links",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Replace the current holiday-style Planning data model (location/dates/budget/participants) with a lightweight per-user plan model that supports: (1) a short plan title (e.g., \"Dubai\"), (2) freeform text notes, and (3) an optional list of saved links; keep the existing authorization checks for all Planning operations.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Update backend Planning endpoints to support the simplified workflow: list all plans for the caller, create a plan with a title, update a plan’s title/notes/links, and delete a plan; remove or deprecate PlanningStats behavior so the Planning tab no longer depends on holiday stats.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add a conditional state migration to preserve existing users’ Planning entries by converting each existing holiday plan into the new lightweight plan format (e.g., title derived from the old location, notes derived from old notes plus any relevant legacy fields as plain text) during upgrade.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Add Holiday Planning section and switch UI to Apple-like liquid glass minimal text-only theme",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,79 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T21:47:33.097Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-10",
+        "summary": "Redesign the Planning tab UI to be a lightweight plan list and plan editor: the user can add a new plan by entering a title (e.g., \"Dubai\"), click a plan to open it, and then type notes and manage saved links; the Planning section does not need to match the structure or complexity of other tabs.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/tabs/PlanningTab.tsx",
+          "frontend/src/components/DashboardLayout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/tabs/PlanningTab.tsx"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Update React Query hooks and frontend types used by the Planning tab to match the new simplified backend model and endpoints, including correct cache invalidation after create/update/delete so the list and editor stay in sync.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/tabs/PlanningTab.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/tabs/PlanningTab.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Replace the current holiday-style Planning data model (location/dates/budget/participants) with a lightweight per-user plan model that supports: (1) a short plan title (e.g., \"Dubai\"), (2) freeform text notes, and (3) an optional list of saved links; keep the existing authorization checks for all Planning operations.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Update backend Planning endpoints to support the simplified workflow: list all plans for the caller, create a plan with a title, update a plan’s title/notes/links, and delete a plan; remove or deprecate PlanningStats behavior so the Planning tab no longer depends on holiday stats.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Add a conditional state migration to preserve existing users’ Planning entries by converting each existing holiday plan into the new lightweight plan format (e.g., title derived from the old location, notes derived from old notes plus any relevant legacy fields as plain text) during upgrade.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/tabs/PlanningTab.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

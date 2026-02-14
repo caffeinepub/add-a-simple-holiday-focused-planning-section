@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component handling authentication flow, profile setup, and dashboard rendering with neutral minimal theme and ThemeProvider integration.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including user profiles, NNS state, bills, payments, horse bets, tasks, habits, and simplified plans with proper state management and cache invalidation.",
+  "frontend/src/pages/LoginPage.tsx": "Text-only login page with neutral liquid-glass card design, no icons or emojis, featuring Internet Identity authentication and dynamic UTM-tracked footer.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup requiring name and optional email input.",
+  "frontend/src/components/DashboardLayout.tsx": "Main dashboard layout with text-only navigation, mobile-friendly tab selector always visible on small screens, neutral frosted-glass surfaces, and Planning tab integration.",
+  "frontend/src/components/tabs/NNSProgressTab.tsx": "Text-only NNS Progress tab with neutral minimal styling, no gradient text or decorative icons, showing staked ICP and maturity data with update dialogs.",
+  "frontend/src/components/tabs/FinancesTab.tsx": "Text-only Bill Tracker tab with neutral minimal styling, no gradient text or decorative icons, managing bills and payments with progress tracking.",
+  "frontend/src/components/tabs/HorseBetsTab.tsx": "Text-only Horse Bets tab with neutral minimal styling, no gradient text or decorative icons, tracking betting history and statistics.",
+  "frontend/src/components/tabs/TodoListTab.tsx": "Text-only To-Do List tab with neutral minimal styling, no gradient text or decorative icons, managing tasks with categories and priorities.",
+  "frontend/src/components/tabs/HabitTrackerTab.tsx": "Text-only Habit Tracker tab with neutral minimal styling, no gradient text or decorative icons, tracking daily habits with progress bars and streaks.",
+  "frontend/src/index.css": "Global styles with neutral OKLCH color system for liquid-glass minimal theme, supporting light/dark modes with PWA-specific CSS for iPhone safe areas and overscroll prevention.",
+  "frontend/index.html": "HTML entry point with PWA-optimized meta tags for iPhone standalone mode including viewport-fit=cover, safe-area support, and apple-mobile-web-app settings for proper display on iOS devices.",
+  "frontend/src/components/tabs/PlanningTab.tsx": "Simplified Planning tab with a lightweight plan list and in-tab editor for freeform notes and saved links, featuring title-only plan creation and clickable link management."
+}

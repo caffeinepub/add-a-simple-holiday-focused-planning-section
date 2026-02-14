@@ -1,0 +1,60 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T21:47:33.094Z",
+  "summary": "The diff implements a new simplified Planning UI and introduces a backend migration module plus a new Plan type, but several acceptance criteria are not met (notably plan timestamps/fields and robust backend ID assignment). Some backend endpoint/authorization details are not visible due to truncation.",
+  "missing_requirements": [
+    {
+      "id": "REQ-7",
+      "requirement": "Backend exposes a plan type that includes at minimum: id, title, notes/content text, links (optional list), createdAt, updatedAt.",
+      "reason": "The new Plan/NewActor plan record includes only a single time field named `timestamp` and does not show `createdAt` and `updatedAt` fields.",
+      "evidence": [
+        "backend/main.mo",
+        "backend/migration.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "IDs are assigned robustly on the backend (not derived from frontend array length) so concurrent edits do not create collisions.",
+      "reason": "The PlanningTab generates the plan `id` on the frontend using `BigInt(Date.now())` and sends it to the backend via `addPlan`, which contradicts the requirement that IDs be assigned robustly on the backend.",
+      "evidence": [
+        "frontend/src/components/tabs/PlanningTab.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Migration runs only when needed (conditional migration policy), and does not break fresh deployments with no prior state.",
+      "reason": "The migration function `Migration.run(old : OldActor) : NewActor` is shown as a direct transformation from `old.plannings` to `plans` with no visible conditional gating (e.g., checking whether state is already migrated or whether legacy fields exist).",
+      "evidence": [
+        "backend/migration.mo",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Backend methods exist to: get caller plans, add plan, update plan by id, delete plan by id; and Planning UI no longer depends on getPlanningStats.",
+      "reason": "The backend method implementations for plan list/create/update/delete and any removal/deprecation of PlanningStats are not present in the provided truncated `backend/main.mo` excerpt, so the diff summary does not provide evidence they were implemented/removed.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Frontend-generated plan IDs and timestamps (using Date.now) as part of creating a plan object before calling the backend.",
+      "reason": "The BuildRequest/AC requires robust backend ID assignment; generating IDs client-side is an unrequested (and conflicting) behavior.",
+      "evidence": [
+        "frontend/src/components/tabs/PlanningTab.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/tabs/PlanningTab.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json"
+  ]
+}

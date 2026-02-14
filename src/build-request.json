@@ -1,0 +1,114 @@
+{
+  "kind": "build_request",
+  "title": "Simplify Planning tab into title-based plans with freeform notes and link saving",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "text": "Replace the current holiday-style Planning data model (location/dates/budget/participants) with a lightweight per-user plan model that supports: (1) a short plan title (e.g., \"Dubai\"), (2) freeform text notes, and (3) an optional list of saved links; keep the existing authorization checks for all Planning operations.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages-4"
+        ],
+        "quotes": [
+          "for the planing section, it doesn't need to be like the others. just having somewhere I can add \"dubai\" then open it up and start typing or adding links would be perfect"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a plan type that includes at minimum: id, title, notes/content text, links (optional list), createdAt, updatedAt.",
+        "All Planning methods enforce the same caller authorization pattern used elsewhere in backend/main.mo (user permission required).",
+        "Planning data remains stored per-caller principal in stable/persistent storage (Map keyed by Principal)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Update backend Planning endpoints to support the simplified workflow: list all plans for the caller, create a plan with a title, update a plan’s title/notes/links, and delete a plan; remove or deprecate PlanningStats behavior so the Planning tab no longer depends on holiday stats.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages-4"
+        ],
+        "quotes": [
+          "add \"dubai\" then open it up and start typing or adding links"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There are backend methods that allow: get caller plans, add plan, update plan by id, delete plan by id.",
+        "Frontend no longer needs to call getPlanningStats (either the method is removed and frontend updated, or it remains but Planning UI does not depend on it).",
+        "IDs are assigned robustly on the backend (not derived from frontend array length) so concurrent edits do not create collisions."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Add a conditional state migration to preserve existing users’ Planning entries by converting each existing holiday plan into the new lightweight plan format (e.g., title derived from the old location, notes derived from old notes plus any relevant legacy fields as plain text) during upgrade.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages-4"
+        ],
+        "quotes": [
+          "just having somewhere I can add \"dubai\" then open it up and start typing or adding links"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On upgrade, existing stored plannings are not lost.",
+        "Legacy holiday plans become readable as new plans in the updated UI (at least title and notes populated).",
+        "Migration runs only when needed (conditional migration policy), and does not break fresh deployments with no prior state."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Redesign the Planning tab UI to be a lightweight plan list and plan editor: the user can add a new plan by entering a title (e.g., \"Dubai\"), click a plan to open it, and then type notes and manage saved links; the Planning section does not need to match the structure or complexity of other tabs.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages-4"
+        ],
+        "quotes": [
+          "it doesn't need to be like the others. just having somewhere I can add \"dubai\" then open it up and start typing or adding links would be perfect"
+        ]
+      },
+      "acceptanceCriteria": [
+        "PlanningTab no longer shows holiday-specific fields (dates, participants, budget, confirmation, upcoming badges) and no longer shows the existing stats cards.",
+        "The default Planning view shows a list of plan titles with an obvious control to create a new plan using only a title input.",
+        "Clicking a plan opens a detail view/editor where the user can edit freeform notes text.",
+        "The editor includes a simple way to add/remove links and renders saved links as clickable anchors (open in a new tab).",
+        "All user-facing copy is in English."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Update React Query hooks and frontend types used by the Planning tab to match the new simplified backend model and endpoints, including correct cache invalidation after create/update/delete so the list and editor stay in sync.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages-4"
+        ],
+        "quotes": [
+          "add \"dubai\" then open it up and start typing or adding links"
+        ]
+      },
+      "acceptanceCriteria": [
+        "frontend/src/hooks/useQueries.ts exposes query/mutation hooks compatible with the updated backend Planning methods.",
+        "After creating, updating, or deleting a plan, the Planning queries are invalidated/refetched so UI updates immediately without a hard refresh.",
+        "No immutable frontend paths are modified (as per SYSTEM_CONTEXT immutablePaths)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in backend/main.mo (add backend/migration.mo only as needed for upgrade).",
+    "Do not modify any files under frontend/src/components/ui or any paths listed in SYSTEM_CONTEXT.frontend.immutablePaths.",
+    "Use English for all user-facing UI text."
+  ],
+  "nonGoals": [
+    "Adding rich-text/Markdown editing, file uploads, or real-time collaboration.",
+    "Integrating third-party link previews or external metadata fetching.",
+    "Changing the app theme (user stated the theme is already perfect).",
+    "Adding new tabs or unrelated dashboard features."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
